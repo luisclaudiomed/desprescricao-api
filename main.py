@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime, timedelta
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -69,14 +70,11 @@ def desprescrever():
         semana += 1
         gotas *= 0.96  # Redução de 4% por semana
 
-       return jsonify({
+    return jsonify({
         "dose_inicial_gotas": round(gotas_iniciais),
         "cronograma": cronograma
     })
 
-import os
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
