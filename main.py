@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime, timedelta
-import math
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +13,15 @@ equivalencias_diazepam = {
     "flunitrazepam": 1,
     "lorazepam": 1,
     "nitrazepam": 10,
-    "oxazepam": 20
+    "oxazepam": 20,
+    "clobazam": 20,
+    "estazolam": 1.5,
+    "flurazepam": 22.5,
+    "midazolam": 11.25,
+    "prazepam": 15,
+    "temazepam": 20,
+    "triazolam": 0.5
+    # "cloxazolam": ???  # Aguardando validação clínica
 }
 
 gotas_por_mg = {
@@ -42,7 +49,7 @@ def desprescrever():
         return jsonify({"erro": "data inválida"}), 400
 
     eq_diazepam = dose * (10 / equivalencias_diazepam[benzo])
-    mg_destino = eq_diazepam * gotas_por_mg[destino]  # Ex: 100 mg diazepam → 10 mg clonazepam
+    mg_destino = eq_diazepam * gotas_por_mg[destino]
     gotas_iniciais = round(mg_destino / gotas_por_mg[destino])
 
     cronograma = []
